@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Eğitmenler";
+    string myMessage;
+}
+@using Microsoft.AspNetCore.Http
+@using SoftwareRouteGuideAPP.Models.Teacher
+@model List<Teachers>
+<section class="teacher" style="background-image: url('../img/teacher.jpg')">
+    <div class="teacher-content">
+        <div class="container px-5">
+            <h2 class="text-light display-1 lh-1 mb-4">
+                Eğitim sınırsızdır.
+                <br />
+                Eğitmenlerimizle tanış.
+            </h2>
+            @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "User")
+            {
+                <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="/Education/EducationProposal" target="_blank">Ücretsiz Eğitim Önerisinde Bulun</a>
+            }
+            
+        </div>
+    </div>
+</section>
+
+<section class="testimonials text-center bg-light">
+    <div class="container">
+        <h2 class="mb-5 text-dark lead" style="font-size: 50px;">Eğitmenler Listesi</h2>
+        <div class="row">
+            @foreach (var teachers in Model)
+            {
+                myMessage = "https://wa.me/90" + @teachers.Telephone + "?text=SRG%20aracılığı%20ile%20size%20ulaştım%20selam";
+
+                <div class="col-lg-4 mt-5">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <img class="img-fluid rounded-circle mb-3" src="~/img/teacherIcon.png" style="height: 162px; width: 162px;" alt="..." />
+                        <h5 class="text-danger">@teachers.Name @teachers.Surname</h5>
+                        <p class="font-weight-light  text-dark lead">Software Route Guide eğitmenleri ile dilediğiniz vakit WhatsApp üzerinden iletişime geçebilirsiniz.</p>
+                        @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "User")
+                        {
+                            <a href="@myMessage" class="btn btn-outline-dark mb-5">Mesaj At</a>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+<aside class="text-center bg-dark">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-xl-8">
+                <div class="h2 fs-1 text-light mb-4">"Her seviyeden yazılımcılar için eğitim serisi, hem de tek bir platformda!"</div>
+                <img src="~/img/srglogo2.png" alt="..." style="height: 3rem" />
+            </div>
+        </div>
+    </div>
+</aside> 

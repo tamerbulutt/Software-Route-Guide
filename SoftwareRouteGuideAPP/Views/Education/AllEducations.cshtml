@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Tüm Eğitimler";
+}
+@using Microsoft.AspNetCore.Http
+@using SoftwareRouteGuideAPP.Models.Educations
+@model List<Education>
+    <section class="edc" style="background-image: url('../img/software.jpg')">
+        <div class="edc-content">
+            <div class="container px-5">
+                <h2 class="text-light display-1 lh-1 mb-4">
+                    Günün en doğru kararı.
+                    <br />
+                    Öğrenmeye başlamaktır.
+                </h2>
+            </div>
+        </div>
+    </section>
+
+
+<section class="py-5">
+    <div class="container px-5">
+        <h2 class="fw-bolder fs-5 mb-4">Tüm Eğitimler</h2>
+      
+        <div class="row gx-5">
+            @if (Model.Count > 0)
+            {
+                @foreach (var education in Model)
+                {
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-100 shadow border-0 edccard">
+                            <img class="card-img-top" style="height: 100%;" src="@education.Photo1" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">@education.Type</div>
+                                <a class="text-decoration-none link-dark stretched-link" href="/Education/EducationDetails/@education.educationID"><div class="h5 card-title mb-3" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Title</div></a>
+                                <p class="card-text mb-0" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Subtitle1</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle me-3" style="height: 40px; width: 40px;" src="~/img/teacherIcon.png" alt="..." />
+                                        <div class="small">
+                                            <div class="fw-bold">@education.Name @education.Surname</div>
+                                            <div class="text-muted">@education.Date.ToString("dd.MM.yyyy") </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "Admin")
+                        {
+                            <div class="">
+                                <a class="btn btn-outline-danger" href="/Education/Delete/@education.educationID">Eğitimi Sil</a>
+                                <a class="btn btn-outline-warning" href="/Education/Update/@education.educationID">Eğitimi Düzenle</a>
+                                <a class="btn btn-outline-success" href="/Exam/Add/@education.educationID">Sınav Oluştur</a>
+                            </div>
+                        }
+                    </div>
+
+                }
+
+
+
+            }
+            else
+            {
+                <p class="badge-info"> Henüz bir eğitim oluşturulmamış, lütfen takipte kal!</p>
+            }
+
+
+
+        </div>
+
+    </div>
+</section>
+<aside class="text-center bg-dark">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-xl-8">
+                <div class="h2 fs-1 text-light mb-4">"Her seviyeden yazılımcılar için eğitim serisi, hem de tek bir platformda!"</div>
+                <img src="~/img/srglogo2.png" alt="..." style="height: 3rem" />
+            </div>
+        </div>
+    </div>
+</aside>

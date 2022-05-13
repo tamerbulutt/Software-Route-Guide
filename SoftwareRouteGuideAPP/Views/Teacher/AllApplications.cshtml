@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Eğitmenlik Başvuruları";
+}
+@using SoftwareRouteGuideAPP.Models.Teacher
+@model List<ApplicationDetails>
+<section class="cta">
+    <div class="cta-content">
+        <div class="container px-5">
+            <h2 class="text-light display-1 lh-1 mb-4">
+                Eğitmenlerini özenle seçmelisin.
+                <br />
+                Detaylar aşağıdadır.
+            </h2>
+        </div>
+    </div>
+</section>
+<h2 class="text-dark display-4 mb-4 text-center mt-3">
+    Eğitmenlik Başvuruları Listesi
+</h2>
+<div class="row gx-5 text-center mx-5">
+    @foreach (var app in Model)
+    {
+        <div class="card mx-3">
+            <h5 class="card-header">@app.Name  @app.Surname</h5>
+            <div class="card-body mb">
+                <h5 class="card-title">@app.Email</h5>
+                <p class="card-text">@app.Message</p>
+                <a href="/Teacher/Approval/@app.userID" class="btn btn-outline-success">Başvuruyu Onayla</a>
+                <a href="/Teacher/Rejected/@app.userID" class="btn btn-outline-danger">Başvuruyu Reddet</a>
+            </div>
+        </div>
+    }
+
+
+</div>

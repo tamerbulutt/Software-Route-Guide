@@ -1,0 +1,236 @@
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SRG</title>
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="~/img/srglogo.png" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+        <div class="container px-5">
+            <img src="~/img/srglogo.png" style="width: 100px;"></img>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="bi-list"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="/Home">Anasayfa</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Eğitim
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "Teacher")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Teacher/Educations/@Context.Session.GetInt32("userID")">Eklediğim Eğitimler</a>
+                                </li>
+                            }
+                            @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") != "User")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Education/AllEducations">Tüm Eğitimler</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Education/Add">Eğitim Oluştur</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Education/ProposalList">Eğitim Önerilerini İncele</a>
+                                </li>
+                            }
+                            else if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "User")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Education/Educations">Eğitimler</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link me-lg-3"
+                                   href="/Teacher/AllTeachers">Eğitmenler</a>
+                            </li>
+                            @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "User")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link me-lg-3"
+                                       href="/Education/EducationProposal">Eğitim Önerisi Yap</a>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </li>
+                    @if (Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "Admin")
+                    {
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/Contact/ContactList">Şikayet ve Öneriler </a></li>
+                    }
+                    @if (@Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") !=
+                  "Admin")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link me-lg-3"
+                               href="/User/Profile/@Context.Session.GetInt32("userID")">Profilim</a>
+                        </li>
+
+                    }
+
+                    @if (!Context.Session.GetInt32("userID").HasValue)
+                    {
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/User/Register">Aramıza Katıl </a></li>
+
+                    }
+                </ul>
+
+
+                @if (!@Context.Session.GetInt32("userID").HasValue)
+                {
+
+                    <button class="btn btn-outline-success rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
+                    data-bs-target="#feedbackModal">
+                        <span class="d-flex align-items-center">
+                            <a class="small text-decoration-none text-success" href="/User/Login">Giriş Yap</a>
+                        </span>
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
+                    data-bs-target="#feedbackModal">
+                        <span class="d-flex align-items-center">
+                            <a class="small text-decoration-none text-white" href="/User/Logout">Çıkış Yap</a>
+                        </span>
+                    </button>
+                }
+
+            </div>
+        </div>
+    </nav>
+    @RenderBody()
+
+    <div class="container">
+        <footer class="row row-cols-5 py-5 my-5 border-top">
+            <div class="col">
+                <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+                <p class="text-muted"><span class="text-dark">SRG</span> © 2021, Tüm Hakları Saklıdır</p>
+            </div>
+
+            <div class="col">
+
+            </div>
+
+            <div class="col">
+                <h5>Başlangıç</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="/Home" class="nav-link p-0 text-muted">Anasayfa</a></li>
+                    @if (Context.Session.GetInt32("userID").HasValue)
+                    {
+                        <li class="nav-item mb-2">
+                            <a href="/Education/Educations"
+                               class="nav-link p-0 text-muted">Eğitimler</a>
+                        </li>
+                    }
+
+                    @if (!Context.Session.GetInt32("userID").HasValue)
+                    {
+                        <li class="nav-item mb-2">
+                            <a href="/User/Register" class="nav-link p-0 text-muted">Aramıza Katıl</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="/User/Login" class="nav-link p-0 text-muted">Giriş Yap</a></li>
+                    }
+                </ul>
+            </div>
+            
+                <div class="col">
+                    <h5>SRG Hakkında</h5>
+                    <ul class="nav flex-column">
+
+                        <li class="nav-item mb-2">
+                            <a href="/Teacher/AllTeachers"
+                               class="nav-link p-0 text-muted">Eğitmenler</a>
+                        </li>
+                        @if (@Context.Session.GetString("userType") == "User")
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="/Contact/Contact" class="nav-link p-0 text-muted">İletişim</a>
+                            </li>
+                        }
+                        </ul>
+                </div>
+            
+            <div class="col">
+                <h5>Hakkımda</h5>
+                <ul class="nav flex-column">
+                    @if (@Context.Session.GetInt32("userID").HasValue)
+                    {
+                        if (@Context.Session.GetString("userType") == "User")
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="/User/Profile/@Context.Session.GetInt32("userID")"
+                                   class="nav-link p-0 text-muted">Hesabım</a>
+                            </li>
+
+
+                        <li class="nav-item mb-2">
+                            <a href="/Education/EducationProposal"
+                               class="nav-link p-0 text-muted">Eğitim Önerisinde Bulun</a>
+                        </li>
+                        }
+                        if (@Context.Session.GetString("userType") == "User")
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="/Teacher/TeacherApplication"
+                                   class="nav-link p-0 text-muted">Eğitmenlik Başvurusunda Bulun</a>
+                            </li>
+                        }
+                        else if (@Context.Session.GetString("userType") == "Admin")
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="/Teacher/AllApplications"
+                                   class="nav-link p-0 text-muted">Eğitmenlik Başvurularını İncele</a>
+                            </li>
+                        }
+
+                    }
+                    else
+                    {
+                        <li class="nav-item mb-2"><a href="/User/Login" class="nav-link p-0 text-muted">Hesabım</a></li>
+
+                    }
+                    <li class="nav-item mb-2">
+                        <a href="/Contact/Contact" class="nav-link p-0 text-muted">
+                            Şikayet ya da
+                            Öneride Bulun
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

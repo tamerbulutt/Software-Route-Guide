@@ -1,0 +1,103 @@
+﻿@model SoftwareRouteGuideAPP.Models.Educations.EducationAdd
+
+@{
+    ViewData["Title"] = "Eğitim Önerisi";
+}
+@using Microsoft.AspNetCore.Http
+
+<body class="d-flex flex-column">
+    <section class="teacher" style="background-image: url('../img/teacher.jpg')">
+        <div class="teacher-content">
+            <div class="container px-5">
+                <h2 class="text-light display-1 lh-1 mb-4">
+                    Önerin için şimdiden teşekkürler.
+                    <br />
+                    Öğrenim ve öğretim sınırsızdır.
+                </h2>
+            </div>
+        </div>
+    </section>
+    <aside class="text-center bg-muted">
+        <div class="container px-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-xl-8">
+                    <div class="h2 fs-1 text-dark mb-4 lead">"Eğitimin önerini aşağıda doldurabilirsin, içeriklerde argo kullanmamaya ve doğru bilgi paylaşmaya özen gösterirsen çok seviniriz :)"</div>
+                    <img src="~/img/srglogo.png" alt="..." style="height: 3rem" />
+                </div>
+            </div>
+        </div>
+    </aside>
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <!-- Page Content-->
+
+        <section class="py-5">
+            <div class="container px-5 my-5">
+                <div class="row gx-5">
+                    <div class="col-lg-3">
+                        <div class="d-flex align-items-center mt-lg-5 mb-4">
+                            @if (@Context.Session.GetInt32("userID").HasValue)
+                            {
+                                <img class="img-fluid rounded-circle" style="height: 50px; width: 50px;" src="~/img/usericon.png" alt="..." />
+                                <div class="ms-3">
+                                    <div class="fw-bold">@Context.Session.GetString("fullName")</div>
+                                    <div class="text-muted">Geleceğin Eğitmeni</div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <form asp-action="EducationProposal" asp-controller="Education">
+                        <div class="col-lg-9">
+                            <!-- Post content-->
+                            <article>
+                                <!-- Post header-->
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <input required class="fw-bolder mb-1 h1" style="outline: none !important; border: none; " placeholder="Eğitim Başlığı" asp-for="Title">
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">30.10.2021 <span class="text-warning">(Oluşturulan Tarih Alınacaktır)</span></div>
+                                    <!-- Post categories-->
+                                    <input required class="bg-showcase-1 text-decoration-none link-dark" style="width: 130px; height: 20px; outline: none !important; border: none; " placeholder="Kategori Giriniz" asp-for="Type">
+                                </header>
+                                <!-- Preview image figure-->
+                                <figure class="mb-4"><img class="img-fluid rounded" style="height: 400px; width: 900px;" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                                <input class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;" placeholder="Fotoğraf'ın URL'ini buraya giriniz" asp-for="Photo1">
+
+                                <section class="">
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;" placeholder="Birinci paragrafınızı buraya giriniz" asp-for="Paragraph1">
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="İkinci paragrafınızı buraya giriniz" asp-for="Paragraph2"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="Üçüncü paragrafınızı buraya giriniz" asp-for="Paragraph3"></input>
+                                    <input required class="fw-bolder mb-4 mt-5 h2" placeholder="Birinci Başlığınızı Buraya Giriniz" style="outline: none !important; border: none; width: 500px; " asp-for="Subtitle1"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="Başlık altı birinci paragrafınızı buraya giriniz" asp-for="Paragraph4"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="Başlık altı ikinci paragrafınızı buraya giriniz" asp-for="Paragraph5"></input>
+                                </section>
+                                <figure class="mb-4"><img class="img-fluid rounded" style="height: 400px; width: 900px;" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                                <input class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;" placeholder="2. Fotoğraf'ın URL'ini buraya giriniz" asp-for="Photo2"></input>
+                                <section class="">
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="2. fotoğraf altı birinci paragrafınızı buraya giriniz" asp-for="Paragraph6"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="2. fotoğra altı ikinci paragrafınızı buraya giriniz" asp-for="Paragraph7"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="2. fotoğra altı üçüncü paragrafınızı buraya giriniz" asp-for="Paragraph8"></input>
+                                    <input required class="fw-bolder mb-4 mt-5 h2" placeholder="Son Başlığınızı Buraya Giriniz" style="outline: none !important; border: none; width: 500px; " asp-for="Subtitle2"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="Son kısım birinci paragrafınızı buraya giriniz" asp-for="Paragraph9"></input>
+                                    <input required class="fs-5 mb-4 p" style="height: 200px; width: 900px; outline: none !important; border: none; " placeholder="Son kısım ikinci paragrafınızı buraya giriniz" asp-for="Paragraph10" />
+                                </section>
+                                <input type="hidden" asp-for="userID" value="@Context.Session.GetInt32("userID")"/>
+                                <p class="lead text-dark" style="text-align: center;">Tüm içerikleri eksiksiz ve doğru girdiğinizden emin olun.</p>
+                                <button type="submit" class="btn btn-outline-success" style="width: 100%; height: 40px">Eğitim Oluştur</button>
+                            </article>
+                            <!-- Comments section-->
+                            <section>
+                            </section>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>

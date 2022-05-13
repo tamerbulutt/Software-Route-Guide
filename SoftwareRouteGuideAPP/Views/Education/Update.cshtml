@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Eğitimi Güncelle";
+}
+@model SoftwareRouteGuideAPP.Models.Educations.Education
+@if (Model != null)
+{
+    <section class="py-5">
+        <form method="post" asp-action="Update" asp-controller="Education">
+            <div class="container px-5 my-5">
+                <div class="row gx-5">
+                    <div class="col-lg-3">
+                        <div class="d-flex align-items-center mt-lg-5 mb-4">
+                            <img class="img-fluid rounded-circle" style="height: 50px; width: 50px;"
+                                 src="~/img/teacherIcon.png" alt="..." />
+                            <div class="ms-3">
+                                <div class="fw-bold">@Model.Name @Model.Surname</div>
+                                <div class="text-muted">Eğitmen</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <!-- Post content-->
+                        <article>
+                            <!-- Post header-->
+                            <header class="mb-4">
+                                <!-- Post title-->
+                                <input required asp-for="Title" class="fw-bolder mb-1 h1"
+                                       style="outline: none !important; border: none; "
+                                       placeholder="Başlık: @Model.Title"></input>
+                                <input asp-for="educationID" type="hidden" value=@Model.educationID>
+                                <br>
+                                <input required asp-for="Type" class="bg-showcase-3 text-decoration-none link-dark"
+                                       style="width: 130px; height: 20px; outline: none !important; border: none; "
+                                       placeholder="Eğitim Tipi: @Model.Type">
+                            </header>
+                            <!-- Preview image figure-->
+                            <figure class="mb-4">
+                                <img class="img-fluid rounded" style="height: 400px; width: 900px;"
+                                     src="@Model.Photo1" alt="..." />
+                            </figure>
+                            <input required asp-for="Photo1" required class="fs-5 mb-4 p"
+                                   style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;"
+                                   placeholder=@Model.Photo1>
+
+                            <section class="">
+                                <input required asp-for="Paragraph1" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;"
+                                       placeholder=@Model.Paragraph1>
+                                <input required asp-for="Paragraph2" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph2>
+                                <input required asp-for="Paragraph3" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph3>
+                                <input required asp-for="Subtitle1" class="fw-bolder mb-4 mt-5 h2" placeholder=@Model.Subtitle1
+                                       style="outline: none !important; border: none; width: 500px; ">
+                                <input required asp-for="Paragraph4" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph4>
+                                <input required asp-for="Paragraph5" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph5>
+                            </section>
+                            <figure class="mb-4">
+                                <img class="img-fluid rounded" style="height: 400px; width: 900px;"
+                                     src="@Model.Photo2" alt="..." />
+                            </figure>
+                            <input required asp-for="Photo2" class="fs-5 mb-4 p"
+                                   style="height: 200px; width: 900px; outline: none !important; border: none;  word-wrap:break-word;"
+                                   placeholder=@Model.Photo2>
+                            <!-- Post content-->
+                            <section class="">
+                                <input required asp-for="Paragraph6" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph6></input>
+                                <input required asp-for="Paragraph7" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph7></input>
+                                <input required asp-for="Paragraph8" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph8></input>
+                                <input required asp-for="Subtitle2" class=" fw-bolder mb-4 mt-5 h2" placeholder=@Model.Subtitle2
+                                       style="outline: none !important; border: none; width: 500px; "></input>
+                                <input required asp-for="Paragraph9" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph9></input>
+                                <input required asp-for="Paragraph10" class="fs-5 mb-4 p"
+                                       style="height: 200px; width: 900px; outline: none !important; border: none; "
+                                       placeholder=@Model.Paragraph10></input>
+                            </section>
+                            <p class="lead text-dark" style="text-align: center;">
+                                Tüm içerikleri eksiksiz ve doğru
+                                girdiğinizden
+                                emin olun.
+                            </p>
+                            <button class="btn btn-success" type="submit"
+                                    style="width: 100%; height: 40px">
+                                Güncelle
+                            </button>
+                        </article>
+                        <!-- Comments section-->
+                        <section>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+}

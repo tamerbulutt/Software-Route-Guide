@@ -1,0 +1,316 @@
+﻿@{
+    ViewData["Title"] = "Profilim";
+}
+@model SoftwareRouteGuideAPP.Models.User.ProfileViewModel
+@using Microsoft.AspNetCore.Http
+
+
+<section class="py-5 mt-5">
+    <div class="container px-5">
+        <h1 class="mb-4 lead text-center" style="font-size: 30px;">Lütfen Gitmek İstediğin Bölümü Seç</h1>
+
+        <div class="d-grid gap-2">
+            <!-- Button trigger pw change modal -->
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Şifremi Değiştir
+            </button>
+
+            <!-- Button trigger delete account modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                Hesabımı Sil
+            </button>
+        </div>
+
+        <!--<div class="btn-group btn-group-lg mt-4" role="group" aria-label="...">
+            <a class="btn btn-dark">İstatistikler</a>
+            <a href="#completed" class="btn btn-outline-dark">Tamamladığım Eğitimler</a>
+            <a href="#completedCount" class="btn btn-outline-dark">Tamamlanan Toplam Eğitim</a>
+            <a href="#score" class="btn btn-outline-dark">Toplam Skor</a>
+            <a href="#thismonth" class="btn btn-outline-dark">Bu Ay Tamamalanan Eğitim Sayısı</a>
+            <a href="#average" class="btn btn-outline-dark">Ortalama Sınav Skorum</a>
+        </div>-->
+    </div>
+</section>
+@if (@Context.Session.GetString("userType") == "User")
+{
+    <section class="py-5 mt-5">
+        <hr id="completed" class="text-black">
+        <div class="container px-5">
+            <h1 class="mb-4 lead text-center" style="font-size: 30px;">Tamamladığım Eğitimler</h1>
+            <div class="row gx-5">
+                @if (Model.education != null)
+                {
+                    @foreach (var education in Model.education)
+                    {
+                        <div class="col-lg-4 mb-5">
+                            <div class="card h-100 shadow border-0 edccard">
+                                <img class="card-img-top" style="height: 100%;" src="@education.Photo1" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">@education.Type</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/Education/EducationDetails/@education.educationID"><div class="h5 card-title mb-3" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Title</div></a>
+                                    <p class="card-text mb-0" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Subtitle1</p>
+                                </div>
+                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                    <div class="d-flex align-items-end justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img class="rounded-circle me-3" style="height: 30px; width: 30px;" src="https://umiamilibraries.github.io/courses-and-workshops/common/assets/images-for-data/green-check-mark-double-hi-300x277.png" alt="..." />
+                                            <div class="small">
+                                                <div class="text-muted">Eğitim başarı ile tamamlanmıştır. </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                }
+                else
+                {
+                    <p class="text-center mt-5">Şuana kadar hiç bir eğitimi tamamlamadın, <span class="text-danger">hadi biraz daha çaba göster.</span> </p>
+
+                }
+
+
+
+
+            </div>
+        </div>
+    </section>
+    <hr class="text-success">
+    <h1 class="mb-4 lead text-center text-success" style="font-size: 30px;">Profil Analizi</h1>
+
+    <section class="py-5">
+        <div id="completedCount" class="container px-5">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row gx-0">
+                        <div class="p-4 p-md-5">
+                            <div class="h2 text-center lead text-success" style="font-size: 30px;">Tamamlanan Toplam Eğitim</div>
+                            <p class="text-center mt-5">SRG'ye katıldığınızdan beri toplam <span class="text-warning">@Model.educationCounts.educationCount</span> adet eğitim tamamladınız.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div id="score" class="container px-5">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row gx-0">
+                        <div class="p-4 p-md-5">
+                            <div class="h2 text-center lead text-primary" style="font-size: 30px;">Toplam Skor</div>
+                            <p class="text-center mt-5">
+                                SRG eğitimleri sonucundaki toplam skorunuz: <span class="text-primary">@Model.educationCounts.educationScore</span>
+                                <br>
+                                <small class="text-center text-success" style="font-size: 12px;">Daha fazla eğitim alarak bu skoru arttırabilirsiniz..</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div id="thismonth" class="container px-5">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row gx-0">
+                        <div class="p-4 p-md-5">
+                            <div class="h2 text-center lead text-warning" style="font-size: 30px;">Son 1 Ay İçerisinde Tamamlanan Eğitim Sayısı</div>
+                            <p class="text-center mt-5">Son 1 ay içerisinde toplamda <span class="text-warning">@Model.educationCounts.educationMonthlyCount</span> adet eğitim tamamladınız.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div id="average" class="container px-5">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row gx-0">
+                        <div class="p-4 p-md-5">
+                            <div class="h2 text-center lead text-success" style="font-size: 30px;">Profil Analizine Göre Tavsiyelerimiz</div>
+                            @if (@Model.educationCounts.educationMonthlyCount < 3 && @Model.educationCounts.educationMonthlyCount != 0)
+                            {
+                                <p class="text-center mt-5">Bu ay 3'den daha az eğitime girdin, <span class="text-warning">biraz daha çaba göstermelisin!</span> </p>
+                            }
+                            else if (@Model.educationCounts.educationMonthlyCount > 3)
+                            {
+                                <p class="text-center mt-5">Bu ay 3'den daha fazla eğitime girdin, <span class="text-success">çaban için tebrikler, çok iyisin!</span> </p>
+                            }
+                            else if (@Model.educationCounts.educationMonthlyCount == 3)
+                            {
+                                <p class="text-center mt-5">Bu ay 3 eğitime girdin, <span class="text-success">çaban için tebrikler, fakat biraz daha çabalamalısın!</span> </p>
+                            }
+                            else if (@Model.educationCounts.educationMonthlyCount == 0)
+                            {
+
+                                <p class="text-center mt-5">Bu ay hiç bir eğitime girmedin <span class="text-danger">acilen bir şeyler yapmalısın.</span> </p>
+                            }
+                            else
+                            {
+                                <p class="text-center mt-5">Profilin ile ilgili daha net yorum yapabilmemiz için <span class="text-warning">biraz daha eğitim tamamlamalısın.</span> </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+else
+{
+    <section class="py-5">
+        <div id="thismonth" class="container px-5">
+            <div class="card border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row gx-0">
+                        <div class="p-4 p-md-5">
+                            <div class="h2 text-center lead text-warning" style="font-size: 30px;">Kullanıcı Girişi Gerekli</div>
+                            <p class="text-center mt-5"><span class="text-warning">Sadece kullanıcı girişi yapan kişiler için profil analizi yapılır.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+
+
+
+<!--Password Change Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Şifre Değişikliği</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="userID" type="hidden" value=@Context.Session.GetInt32("userID")>
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-50" id="inputGroup-sizing-default">Mevcut Şifreniz</span>
+                    <input id="currentPassword" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-50" id="inputGroup-sizing-default">Yeni Şifreniz</span>
+                    <input id="password" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-50" id="inputGroup-sizing-default">Şifrenizi Doğrulayın</span>
+                    <input id="passwordConfirm" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <p id="message" class="text-start text-danger" style="display: none;">Şifreler eşleşmiyor!</p>
+                <div id="scMessage" class="alert alert-success" style="display: none;" role="alert">
+                    Şifreniz başarıyla değiştirildi.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">İptal</button>
+                <button id="chpwButton" type="button" class="btn btn-primary">Şifreyi Değiştir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Delete Account Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hesap Silme İşlemi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted">
+                    <span class="text-dark">SRG</span> platform'undan ayrılmak istiyorum, tüm verilerim ve almış olduğum eğitimlerin silineceğini
+                    kabul ve beyan ederim.
+                </p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-25" id="inputGroup-sizing-default">Şifreniz</span>
+                    <input id="currentPassword_Del" type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <p id="message_del" class="text-start text-danger" style="display: none;">Şifrenizi girmeden hesabınızı silemezsiniz!</p>
+                <button id="deleteAccountButton" class="w-100 mb-2 btn btn-lg rounded-4 btn-outline-danger">Hesabımı Sil</button>
+                <div id="delete_err_msg" class="alert alert-danger" style="display: none;" role="alert"></div>
+                <small class="text-dar text-center">Seni özleyeceğiz :(</small>
+                <input id="userID_Del" type="hidden" value=@Context.Session.GetInt32("userID")>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#password, #passwordConfirm').on('keyup', function () {
+        if ($('#password').val() == $('#passwordConfirm').val())
+            $('#message').css("display", "none");
+        else
+            $('#message').css("display", "block");
+    });
+    $(document).ready(function () {
+        $("#chpwButton").click(function () {
+            if ($('#currentPassword').val() != "" && $('#password').val() != "" && $('#passwordConfirm').val() != "") {
+                if ($('#password').val() == $('#passwordConfirm').val()) {
+                    var Entity = {
+                        userID: $('#userID').val(),
+                        currentPassword: $('#currentPassword').val(),
+                        password: $('#password').val(),
+                        passwordConfirm: $('#passwordConfirm').val()
+                    };
+                    $.post("/User/ChangePassword", Entity).done(function (data) {
+                        if (data) {
+                            const result = JSON.parse(data);
+                            if (result.success) {
+                                $("input").val("");
+                                $('#scMessage').css({ display: "block" });
+                            }
+                            
+                        }
+                    });
+                }
+            }
+
+        });
+
+        $("#deleteAccountButton").click(function () {
+            if ($('#currentPassword_Del').val() != "") {
+                $('#message_del').css("display", "none");
+                var url = window.location.pathname;
+                var id = parseInt(url.substring(url.lastIndexOf('/') + 1));
+                var Entity = {
+                    userID: id,
+                    password: $('#currentPassword_Del').val()
+                };
+                $.post("/User/DeleteAccount", Entity).done(function (data) {
+                    if (data) {
+                        const result = JSON.parse(data);
+                        if (!result.success) {
+                            $("input").val("");
+                            $('#delete_err_msg').css({ display: "block" })
+                                .text(result.message);
+                        } else {
+                            document.location.reload();
+                        }
+                    }
+                });
+            }
+            else
+                $('#message_del').css("display", "block");
+        });
+    });
+</script>

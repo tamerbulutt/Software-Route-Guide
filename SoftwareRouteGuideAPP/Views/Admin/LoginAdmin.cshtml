@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+}
+@model SoftwareRouteGuideAPP.Models.Admin.AdminLogin
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <title>Giriş Yap - SRG</title>
+    <link rel="shortcut icon" type="image/png" href="img/srglogo.png" />
+</head>
+<body>
+
+    <h1></h1>
+    <div class="container login">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-5 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <!-- <h5 class="modal-title">Modal title</h5> -->
+                    <h2 class="fw-bold mb-0">Admin Girişi</h2>
+                </div>
+
+                <div class="modal-body p-5 pt-0">
+                    <form class="" method="post" asp-action="LoginAdmin" asp-controller="Admin">
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="email" type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="password" type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Parola</label>
+                        </div>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-outline-success" type="submit">Giriş Yap</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

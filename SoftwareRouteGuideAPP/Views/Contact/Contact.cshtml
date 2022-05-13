@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "İletişim";
+}
+@using Microsoft.AspNetCore.Http
+@model SoftwareRouteGuideAPP.Models.ContactAdd
+
+<section class="px-5">
+    <div class="container px-5">
+        <!-- Contact form-->
+        <div class=" rounded-3 py-5 px-4 px-md-5 ">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Şikayet ya da Önerilerini Belirt</h1>
+                <p class="lead fw-normal text-muted mb-0">Bunları senden duymak isteriz..</p>
+            </div>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <form method="post" asp-controller="Contact" asp-action="Contact" id="contactForm">
+                        <!-- Name input-->
+                        <input asp-for="userID" type="hidden" value=1>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Fullname" class="form-control" id="name" type="text" placeholder="Enter your name..." required/>
+                            <label for="name">Adınız ve Soyadınız</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input asp-for="email" class="form-control" id="email" type="email" placeholder="name@example.com" required/>
+                            <label for="email">Eposta Adresiniz</label>
+                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                        </div>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <input  asp-for="telephone" class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" required/>
+                            <label for="phone">Telefon Numaranız</label>
+                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.
+                            </div>
+                        </div>
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea  asp-for="message" class="form-control" id="message" type="text"
+                                placeholder="Enter your message here..." style="height: 10rem" required></textarea>
+                            <label for="message">Mesajınız</label>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.
+                            </div>
+                        </div>
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-success btn-lg" type="submit">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+</section>

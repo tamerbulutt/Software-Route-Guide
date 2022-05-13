@@ -1,0 +1,35 @@
+﻿@using SoftwareRouteGuideAPP.Models.Contact
+@model List<Contacts>
+
+<section class="cta">
+    <div class="cta-content">
+        <div class="container px-5">
+            <h2 class="text-light display-1 lh-1 mb-4">
+                Geri Dönüşler Önemlidir.
+                <br />
+                Şikayetleri Düzeltmeye Başla.
+            </h2>
+        </div>
+    </div>
+</section>
+
+<h2 class="text-dark display-4 mb-4 text-center mt-3">
+    Şikayet ve Öneri Listesi.
+</h2>
+
+<div class="row gx-5 text-center mx-5">
+    @foreach (var contact in Model)
+    {
+        <div class="card mx-3">
+            <h5 class="card-header">@contact.Fullname</h5>
+            <div class="card-body mb">
+                <h5 class="card-title">@contact.email</h5>
+                <h5 class="card-title">@contact.telephone</h5>
+                <p class="card-text">@contact.message</p>
+                <p class="card-text">@contact.complaintID</p>
+                <a href="/Contact/Delete/@contact.complaintID" class="btn btn-outline-danger">Şikayeti Kaldır</a>
+            </div>
+        </div>
+    }
+
+</div>

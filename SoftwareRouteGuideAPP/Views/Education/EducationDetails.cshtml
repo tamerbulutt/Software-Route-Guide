@@ -1,0 +1,113 @@
+
+@using Microsoft.AspNetCore.Http
+@using SoftwareRouteGuideAPP.Models.Educations
+@model SoftwareRouteGuideAPP.Models.Educations.EducationDetailsViewModel
+@{
+    ViewData["Title"] = Model.education.Title;
+}
+<section class="py-5">
+    <div class="container px-5 my-5">
+        <div class="row gx-5">
+            <div class="col-lg-3">
+                <div class="d-flex align-items-center mt-lg-5 mb-4">
+                    <img class="img-fluid rounded-circle" style="height: 50px; width: 50px;" src="~/img/teacherIcon.png" alt="..." />
+                    <div class="ms-3">
+                        <div class="fw-bold">@Model.education.Name @Model.education.Surname</div>
+                        <div class="text-muted">Eğitmen</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <!-- Post content-->
+                <article>
+                    <!-- Post header-->
+                    <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1">@Model.education.Title</h1>
+                        <!-- Post meta content-->
+                        <div class="text-muted fst-italic mb-2">@Model.education.Date.ToString("dd.MM.yyyy")</div>
+                        <!-- Post categories-->
+                        <a class="badge bg-primary text-decoration-none link-light">@Model.education.Type</a>
+                    </header>
+                    <!-- Preview image figure-->
+                    <figure class="mb-4"><img class="img-fluid rounded" style="height: 400px; width: 900px;" src="@Model.education.Photo1" alt="..." /></figure>
+                    <!-- Post content-->
+                    <section class="">
+                        <p class="fs-5 mb-4">@Model.education.Paragraph1</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph2</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph3</p>
+                        <h2 class="fw-bolder mb-4 mt-5">@Model.education.Subtitle1</h2>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph4</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph5</p>
+                    </section>
+                    <figure class="mb-4"><img class="img-fluid rounded" style="height: 400px; width: 900px;" src="@Model.education.Photo2" alt="..." /></figure>
+                    <!-- Post content-->
+                    <section class="">
+                        <p class="fs-5 mb-4">@Model.education.Paragraph6</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph7</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph8</p>
+                        <h2 class="fw-bolder mb-4 mt-5">@Model.education.Subtitle2</h2>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph9</p>
+                        <p class="fs-5 mb-4">@Model.education.Paragraph10</p>
+                    </section>
+                </article>
+                @if (@Context.Session.GetInt32("userID").HasValue && Model.examStatus == false && @Context.Session.GetString("userType") == "User")
+                {
+                    <a href="/Exam/Get/@Model.education.educationID" class="btn btn-outline-info w-100 shadow-lg">Eğitimi okudum, anladım ve <span class="font-weight-bolder">sınava</span> girmek istiyorum.</a>
+                }
+                else if (@Context.Session.GetInt32("userID").HasValue && Model.examStatus == true && @Context.Session.GetString("userType") == "User")
+                {
+                    <a href="#" class="btn btn-outline-warning w-100 shadow-lg">Eğitim sınavını zaten tamamladınız..</a>
+
+                }
+
+                <section>
+
+                    @if (@Model.education.status != "Proposal")
+                    {
+                        <div class="card bg-light shadow-lg">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                @if (!@Context.Session.GetInt32("userID").HasValue || @Context.Session.GetString("userType") != "User")
+                                {
+                                    <p>Yorum yapmak için kullanıcı giriş yapınız!</p>
+                                }
+                                else
+                                {
+                                    <form class="mb-4" method="post" action="/Education/AddComment">
+                                        <textarea class="form-control" name="content" rows="3" placeholder="Hadi sen de bu eğitim hakkında bir yorum yap!"></textarea>
+                                        <input type="hidden" value="@Context.Session.GetString("fullName")" name="fullname">
+                                        <input type="hidden" value="@Model.education.educationID" class="form-control" name="educationID">
+                                        <button type="submit" class="btn btn-outline-success float-right w-100 mt-3">Yorum Yap</button>
+                                    </form>
+                                }
+
+                                <!-- Comment with nested comments-->
+                                @if (Model.comments != null)
+                                {
+                                    @foreach (var comments in Model.comments)
+                                    {
+                                        <div class="d-flex mb-4">
+                                            <!-- Parent comment-->
+                                            <div class="flex-shrink-0"><img class="rounded-circle" style="height: 50px; width: 50px;" src="~/img/usericon.png" alt="..." /></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold">@comments.fullname</div>
+                                                @comments.content
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Henüz yorum yapılmamış</p>
+                                }
+
+                            </div>
+                        </div>
+
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</section>

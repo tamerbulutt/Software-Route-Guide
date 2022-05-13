@@ -1,0 +1,74 @@
+@model int;
+
+<div class="container mx-auto" style="padding-top: 20px; border-radius: solid 10px; margin-top: 60px;">
+    <div class="row justify-content-center align-items-center">
+        <input type="hidden" id="educationID" value=@Model>
+        @for (int i = 0; i < 1; i++)
+        {
+            <span class="lead text-center mx-auto mb-2" style="font-size: 25px;">Soru @(i+1)</span>
+            <div class=" align-items-center mb-4">
+                <div class="card" style="box-shadow: 8px 8px 8px 4px #2e412c" ;>
+                    <div class="question list-group mx-0">
+
+                        <input class="q-title form-control" type="text" placeholder="Soru metnini giriniz:" required>
+
+                        @for (int j = 0; j < 4; j++)
+                        {
+                            <label class="q-answer list-group-item d-flex gap-2">
+                                <input class="a-radio form-check-input flex-shrink-0" type="radio" name=@i id="" value="">
+                                <input class="a-text form-control" type="text" placeholder="Cevap metnini giriniz:" required>
+                            </label>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div id="messagebox" style="display: none;" class="alert alert-success" role="alert"></div>
+
+        <button id="saveButton" class="btn btn-success mt-2">Kaydet</button>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#saveButton").click(function () {
+            var questions = [];
+            Array.from(document.getElementsByClassName("question")).forEach(
+                function (element, index, array) {
+                    var title = element.getElementsByClassName('q-title')[0].value
+                    let Question = {}
+                    Question.questionID = 0;
+                    Question.question = title;
+                    Question.educationID = parseInt($('#educationID').val());
+                    Question.answers = [];
+                    Array.from(element.getElementsByClassName('q-answer')).forEach(
+                        function (e, i, a) {
+                            let Answer = {
+                                answerID: 0,
+                                questionID: 0,
+                                answer: e.getElementsByClassName('a-text')[0].value,
+                                isCorrect: e.getElementsByClassName('a-radio')[0].checked
+                            };
+                            Question.answers.push(Answer);
+                        }
+                    );
+                    questions.push(Question);
+                }
+            );
+            var data = {
+                json: JSON.stringify(questions)
+            };
+
+            $.post("/Exam/Add", data).done(function (dataR) {
+                const result = JSON.parse(dataR);
+                $('#messagebox').text(result.message)
+                $('#messagebox').css({ display: "block" });
+            });
+            $("input").val("");
+            $('.a-radio').prop('checked', false);
+        });
+    });
+</script>

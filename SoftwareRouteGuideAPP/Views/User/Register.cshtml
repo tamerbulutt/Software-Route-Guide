@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+@{
+    @model SoftwareRouteGuideAPP.Models.User.Register
+}
+<div class="container register">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                <!-- <h5 class="modal-title">Modal title</h5> -->
+                <h2 id="sendeara" class="fw-bold mb-0">Sen de aramıza katıl!</h2>
+            </div>
+            <div class="modal-body p-5 pt-0">
+                <form>
+                    <div class="form-floating mb-3">
+                        <input asp-for="firstName" type="text" class="form-control rounded-4" id="firstName"
+                               placeholder="name@example.com">
+                        <label asp-for="firstName">Adınız</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="lastName" type="text" class="form-control rounded-4" id="lastName"
+                               placeholder="name@example.com">
+                        <label asp-for="lastName">Soyadınız</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="email" type="text" class="form-control rounded-4" id="email"
+                               placeholder="name@example.com">
+                        <label asp-for="email">Email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Telephone" type="text" class="form-control rounded-4" id="telephone"
+                               placeholder="name@example.com">
+                        <label asp-for="Telephone">Telefon Numaranız</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="password" type="password" class="form-control rounded-4" id="password"
+                               placeholder="Password">
+                        <label asp-for="password">Parola</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="passwordConfirm" type="password" class="form-control rounded-4"
+                               id="passwordConfirm" placeholder="Password">
+                        <label asp-for="passwordConfirm">Parolanızı Doğrulayın</label>
+                    </div>
+                </form>
+                <button id="submitButton" class="w-100 mb-2 btn btn-lg rounded-4 btn-outline-success">KAYDOL</button>
+                <div id="messagebox" style="display: none;" class="alert alert-success align-items-center" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </symbol>
+                    </svg>
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                        <use xlink:href="#check-circle-fill" />
+                    </svg>
+                    <div id="messagetext">
+                    </div>
+                </div>
+                <small class="text-muted">Kayıt olarak Software Route Guide kullanım koşullarını onaylamış sayılmaktasınız.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
+            var Entity = {
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+                email: $('#email').val(),
+                telephone: $('#telephone').val(),
+                password: $('#password').val(),
+                passwordConfirm: $('#passwordConfirm').val()
+            };
+            $.post("/User/Register", Entity).done(function (data) {
+                if (data) {
+                    const result = JSON.parse(data);
+                    $('#messagetext').text(result.message)
+                    $('#messagebox').css({ display: "flex" });
+                }
+            });
+            $("input").val("");
+        });
+    });
+</script>

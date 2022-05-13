@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Bitiriş Sınavı";
+}
+
+@using SoftwareRouteGuideAPP.Models.Educations
+@model List<Exam>
+
+<aside class="text-center bg-dark">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="pt-5">
+                <div class="h3 fs-1 text-light mb-4 lead">"Sınavında başarılar, süre sınırlaman bulunmamaktadır. Tüm soruları işaretleyip <span class="text-success">'Sınavı Tamamla'</span> butonuna basman gerekmektedir.</div>
+                <img src="~/img/srglogo2.png" alt="..." style="height: 3rem" />
+            </div>
+        </div>
+    </div>
+</aside>
+<div class="container mx-auto" style="padding-top: 20px; border-radius: solid 10px;">
+    <div class="row justify-content-center align-items-center">
+        @if (Model.Count() > 0)
+        {
+            @foreach (var question in Model)
+            {
+
+                <span class="lead text-center mx-auto" style="font-size: 25px;"> Soru 1</span>
+                <div class="question1 align-items-center mb-4">
+                    <div class="card" style="box-shadow: 8px 8px 8px 4px #2e412c" ;>
+                        <div class="list-group mx-0">
+                            <p class="lead pt-2  mx-3 text-center" style="color: #2e412c;">@question.Description</p>
+                            <label class="list-group-item d-flex gap-2">
+                                <input id="choice1" class="form-check-input flex-shrink-0" type="radio" asp-for="@question.questionID" value="@question.choice1" checked>
+                                <small class="d-block text-dark">@question.choice1</small>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input id="choice2" class="form-check-input flex-shrink-0" type="radio" asp-for="@question.questionID" value="@question.choice2">
+                                <small class="d-block text-dark">@question.choice2</small>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input id="choice3" class="form-check-input flex-shrink-0" type="radio" asp-for="@question.questionID" value="@question.choice3">
+                                <small class="d-block text-dark">@question.choice3</small>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+                <a class="btn btn-outline-success">Eğitimi Tamamladım</a>
+            }
+            else
+            {
+                <p> Bu eğitimin sınavı için henüz bir soru tanımlanmamış, takipte kal!</p>
+            }
+
+    </div>
+</div>

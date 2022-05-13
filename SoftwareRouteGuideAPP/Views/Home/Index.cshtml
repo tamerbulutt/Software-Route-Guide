@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+@using Microsoft.AspNetCore.Http
+@using SoftwareRouteGuideAPP.Models.Educations
+@model List<Education>
+
+<section class="cta">
+    <div class="cta-content">
+        <div class="container px-5">
+            @if (Context.Session.GetInt32("userID").HasValue && @Context.Session.GetString("userType") == "Admin")
+            {
+                <h2 class="text-light display-1 lh-1 mb-4">
+                    Admin Paneline Hoşgeldiniz...
+                    <br />
+                    Yetkilerinizi Kullanabilirsiniz.
+                </h2>
+            }else
+            {
+                <h2 class="text-light display-1 lh-1 mb-4">
+                    Beklemeyi bırak.
+                    <br />
+                    Öğrenmeye başla.
+                </h2>
+            }
+
+
+            @if (!Context.Session.GetInt32("userID").HasValue)
+            {
+                <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="/User/Register" target="_blank">Ücretsiz Kayıt Ol</a>
+            }
+            else if(Context.Session.GetString("userType") != "Admin")
+            {
+                <a class="btn btn-outline-light py-3 px-4 rounded-pill" href="/Education/Educations" target="_blank">Eğitime Başla</a>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="showcase">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg')"></div>
+            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                <h2>Mobil Platform'a Uyumlu</h2>
+                <p class="lead mb-0">SRG'den eğitim almak, kendinizi geliştirmek ya da eğitimlerinizi takip etmek için bilgisayar başında olmanıza gerek yok. Mobil cihaz üzerinden de yanımızda olabilirsin!</p>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg')"></div>
+            <div class="col-lg-6 my-auto showcase-text">
+                <h2>Açıklayıcı Eğitimler</h2>
+                <p class="lead mb-0">Gereksiz uzun eğitim yazılarından sıkılmadınız mı? SRG'nin tüm eğitimlerinde, üzerinde durunan konular yalın bir şekilde fakat açıklayıcı olarak anlatılır.</p>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg')"></div>
+            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                <h2>Kolay Kullanım</h2>
+                <p class="lead mb-0">Platform üzerinden eğitim almak, gelişiminizi takip etmek ve geri kalan tüm işlemler inanılmaz kullanım kolaylığı ile birlikte geliyor.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<aside class="text-center bg-dark">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-xl-8">
+                <div class="h2 fs-1 text-light mb-4">"Her seviyeden yazılımcılar için eğitim serisi, hem de tek bir platformda!"</div>
+                <img src="img/srglogo2.png" alt="..." style="height: 3rem" />
+            </div>
+        </div>
+    </div>
+</aside>
+
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading ">Popüler Eğitimler</h2>
+            <h3 class="section-subheading text-muted">Her seviyeye hitap eden eğitimlerden birine tıkla ve öğrenmeye başla..</h3>
+        </div>
+        <div class="row">
+            @if (Model.Count > 0)
+            {
+                @foreach (var education in Model)
+                {
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <div class="portfolio-item" href="/Education/EducationDetails/@education.educationID">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="/Education/EducationDetails/@education.educationID">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x" href="/Education/EducationDetails/@education.educationID"></i></div>
+                                </div>
+                                <img class="img-fluid" src="@education.Photo1" style="height: 300px; width: 100%;" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading"><a class="text-decoration-none text-black" href="/Education/EducationDetails/@education.educationID" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Title</a></div>
+                                <div class="portfolio-caption-subheading text-muted" style="width: 100%; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; ">@education.Subtitle1</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            }
+            else
+            {
+                <p class="badge badge-danger text-center text-warning" > Henüz hiç bir eğitim oluşturulmamıştır, fakat SRG eğitmenleri son hızla çalışmaktadır.</p>
+            }
+
+
+
+        </div>
+    </div>
+</section>
+
+<section class="testimonials text-center bg-dark">
+    <div class="container">
+        <h2 class="mb-5 text-light">İnsanlar hakkımızda ne söylüyor...</h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                    <img class="img-fluid rounded-circle mb-3" src="img/testimonials-1.jpg" alt="..." />
+                    <h5 class="text-light">Selin E.</h5>
+                    <p class="font-weight-light mb-0 text-light lead">"İnanılmaz kullanım kolaylığı sayesinde vakit kaybetmeden öğrenebiliyorum."</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                    <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="..." />
+                    <h5 class="text-light">Rıfat B.</h5>
+                    <p class="font-weight-light mb-0 text-light lead">"Eğitim önerisinde bulunmak, kendi eğitimlerimi bu platformda görmek çok hoş."</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                    <img class="img-fluid rounded-circle mb-3" src="img/testimonials-3.jpg" alt="..." />
+                    <h5 class="text-light">Yeliz K.</h5>
+                    <p class="font-weight-light mb-0 text-light lead">"Gelişimimi sayenizde çok kolayca takip edebiliyorum, bu çok keyif verici."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
